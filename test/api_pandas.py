@@ -6,11 +6,11 @@ import json
 # import time
 # import random
 
-url = "http://192.168.1.22:5210/novaAutorizacao"
+url = "http://dvrmansano.ddns.net:5210//dispositivos/usuario=1"
 
 # payload = "{new_login: 'juan', new_senha: 'juan1234', new_email: 'juan@gmail.com'}"
 # payload = "{login: 'juan', senha: 'juan1234', email: 'juan@gmail.com'}"
-payload = '{"email": "joao@gmail.com", "id_dispositivo": 1, "ativo": 1}'
+payload = '{"email": "joao@gmail.com", "id_dispositivo": 1, "ativo": 0}'
 # payload = "{usuario: 1}"
 # payload = "{lista_atividade: 1}"
 headers = {
@@ -18,7 +18,7 @@ headers = {
     'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOJIUzI1NiJ9.eyJub21lIjoiSnVhbiIsImVtYWlsIjoianVhbkBnbWFpbC5jb20iLCJleHAiOjE2NjkxNTUwOTB9.BfQXeVtnEh3Sf88tN6oF5ST5g5h3ZQWn9jTK59kWS3s'
 }
 
-response = requests.request("POST", url, headers=headers, data=payload)
+response = requests.request("GET", url, headers=headers)
 
 print(response)
 

@@ -43,7 +43,6 @@ def post(dispositivo_id):
 
     dispositivo.id = dispositivo_id
     dispositivo.id_usuario_ultima_atualizacao = payload['usuario_ultima_atualizacao']
-    dispositivo.ligado = payload['ligado']
     dispositivo.id_ultima_atividade = payload['id_ultima_atividade']
     if(payload.get('nome')):
         dispositivo.nome = payload['nome']
