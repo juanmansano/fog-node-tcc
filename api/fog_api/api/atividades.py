@@ -15,4 +15,7 @@ def get():
     print(atividades)
     print(jsonify(atividades_schema.dump(atividades)))
     
+    db_core.remove()
+    db_core.close()
+    
     return jsonify(atividades_schema.dump(atividades))

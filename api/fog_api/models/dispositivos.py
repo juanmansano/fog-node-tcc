@@ -25,6 +25,7 @@ class Dispositivos(Base):
     ativo = Column(Integer(), nullable=False)
     owner = Column(Integer(), nullable=False)
     id_usuario_ultima_atualizacao = Column(Integer(), nullable=False)
+    data_criacao = Column(DateTime(), nullable=True)
     atividade = relationship("Atividades")
     usuarios_autorizados = relationship("Autorizacao")
 

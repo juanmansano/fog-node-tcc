@@ -18,7 +18,7 @@ db_core = scoped_session(
         autocommit=False,
         autoflush=False,
         bind=create_engine(
-            "mysql+pymysql://remoto:juan1234@dvrmansano.ddns.net:3306/tcc",
+            "mysql+pymysql://juan:juan@localhost:3306/tcc",
             pool_size=15,
             max_overflow=10,
             pool_recycle=60 * 60 * 1,

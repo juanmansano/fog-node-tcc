@@ -5,9 +5,11 @@ from fog_api.api.middleware import middleware
 
 from fog_api.models.dispositivos import Autorizacao, Dispositivos, dispositivo_schema
 
+import datetime
+
 app = Blueprint('dispositivos', __name__)
 
-@app.route('/dispositivos/usuario=<user_id>', methods=['GET'])
+@app.route('/dispositivos/usuario=<user_id>', endpoint='device', methods=['GET'])
 @middleware
 def get(user_id):
     dispositivos = db_core.query(Dispositivos)\
@@ -17,6 +19,32 @@ def get(user_id):
 
     print(dispositivos)
     print(jsonify(dispositivo_schema.dump(dispositivos)))
+    
+    db_core.remove()
+    db_core.close()
+    
+    return jsonify(dispositivo_schema.dump(dispositivos))
+
+@app.route('/novoDispositivo', endpoint='newDevice', methods=['GET'])
+@middleware
+def get():
+    nome = str(request.args.get('nome'))
+    owner = request.args.get('owner')
+    data_criacao_str = str(request.args.get('data_criacao'))
+    print(nome)
+    print(owner)
+    print(data_criacao_str)
+    data_criacao = datetime.datetime.strptime(data_criacao_str, '%d/%m/%Y %H:%M:%S')
+    dispositivos = db_core.query(Dispositivos)\
+        .filter(Dispositivos.nome == nome)\
+                .filter(Dispositivos.owner == owner)\
+                    .filter(Dispositivos.data_criacao == data_criacao).all()
+
+    print(dispositivos)
+    print(jsonify(dispositivo_schema.dump(dispositivos)))
+    
+    db_core.remove()
+    db_core.close()
     
     return jsonify(dispositivo_schema.dump(dispositivos))
 
@@ -32,6 +60,8 @@ def post(dispositivo_id):
 
     db_core.add(dispositivo)
     db_core.commit()
+    db_core.remove()
+    db_core.close()
 
     return {'status_atualizado': True}
 
@@ -49,6 +79,8 @@ def post(dispositivo_id):
 
     db_core.add(dispositivo)
     db_core.commit()
+    db_core.remove()
+    db_core.close()
 
     return {'configuracao_atualizada': True}
 

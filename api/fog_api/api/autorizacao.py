@@ -16,6 +16,9 @@ def get(dispositivo_id):
                             join(Autorizacao, Usuarios.id == Autorizacao.id_usuario).\
                                 filter(Autorizacao.id_dispositivo==dispositivo_id).\
                                     filter(Autorizacao.ativo==True).all()
+    
+    db_core.remove()
+    db_core.close()
 
     return jsonify(usuarios_schema.dump(autorizacao))
 
@@ -44,6 +47,8 @@ def post():
     
     db_core.add(autorizacao)
     db_core.commit()
+    db_core.remove()
+    db_core.close()
 
     return {'autorizacao_atualizada': 1}
     
