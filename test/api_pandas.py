@@ -6,7 +6,7 @@ import json
 # import time
 # import random
 
-url = "http://dvrmansano.ddns.net:5210//dispositivos/usuario=1"
+url = "http://tccmansano.ddns.net:5210/dispositivos/usuario=1"
 
 # payload = "{new_login: 'juan', new_senha: 'juan1234', new_email: 'juan@gmail.com'}"
 # payload = "{login: 'juan', senha: 'juan1234', email: 'juan@gmail.com'}"
