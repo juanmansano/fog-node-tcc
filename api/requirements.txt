@@ -9,3 +9,4 @@ flask-marshmallow
 marshmallow_sqlalchemy
 bcrypt
 pyjwt
+paho-mqtt

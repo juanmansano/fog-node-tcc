@@ -7,6 +7,10 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
 from .helpers import Singleton
+from fog_api import config
+
+import paho.mqtt.client as mqtt
+import json
 
 class Database(metaclass=Singleton):
     engine = SQLAlchemy()
@@ -52,3 +56,34 @@ def create_app():
     log.info("App criado")
     
     return app
+
+
+def on_connect(client, userdata, flags, rc):
+    print("Connected with result code "+str(rc))
+    client.subscribe(config.SUB_TOPIC, config.QOS)
+
+
+def on_message(client, userdata, msg):
+    if(msg.retain == 1):
+        pass
+    else:
+        message = str(msg.payload)
+        print(message)
+        list = message.split("'")
+        if(not message.startswith("b'test")):
+            mensagem_json = json.loads(list[1])
+            print(mensagem_json)
+
+
+def create_mqtt_connection():
+    
+    Broker = "tccmansano.ddns.net"
+    client = mqtt.Client("fog_")
+    client.username_pw_set("juan", "juan1234")
+    client.connect(Broker, 1883)
+    client.loop_start()
+
+    client.on_connect = on_connect
+    client.on_message = on_message
+
+    return client
