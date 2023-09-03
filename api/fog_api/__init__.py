@@ -87,3 +87,5 @@ def create_mqtt_connection():
     client.on_message = on_message
 
     return client
+
+mqtt = create_mqtt_connection()
