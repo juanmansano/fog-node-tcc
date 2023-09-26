@@ -7,7 +7,7 @@ import mariadb
 import collections
 import datetime
 
-Broker = "dvrmansano.ddns.net"
+Broker = "tccmansano.ddns.net"
 
 sub_topic = "end_point"    # receive messages on this topic
 

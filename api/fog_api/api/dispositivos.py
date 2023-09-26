@@ -5,6 +5,8 @@ from fog_api.api.middleware import middleware
 
 from fog_api.models.dispositivos import Autorizacao, Dispositivos, dispositivo_schema
 
+from fog_api.mqtt_stomp.send_message import send_message
+
 import datetime
 
 app = Blueprint('dispositivos', __name__)
@@ -73,7 +75,9 @@ def post(dispositivo_id):
 
     dispositivo.id = dispositivo_id
     dispositivo.id_usuario_ultima_atualizacao = payload['usuario_ultima_atualizacao']
-    dispositivo.id_ultima_atividade = payload['id_ultima_atividade']
+    if dispositivo.id_ultima_atividade != payload['id_ultima_atividade']:
+        send_message(dispositivo_id, payload['id_ultima_atividade'])
+        dispositivo.id_ultima_atividade = payload['id_ultima_atividade']
     if(payload.get('nome')):
         dispositivo.nome = payload['nome']
 

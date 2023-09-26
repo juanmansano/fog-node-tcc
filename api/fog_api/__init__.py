@@ -1,16 +1,19 @@
 import logging
+from datetime import datetime
+import sys
+import json
 
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
+import stomp
+import paho.mqtt.client as mqtt
 
 from .helpers import Singleton
 from fog_api import config
 
-import paho.mqtt.client as mqtt
-import json
+mqtt_conn = None
 
 class Database(metaclass=Singleton):
     engine = SQLAlchemy()
@@ -38,6 +41,9 @@ def create_app():
     from fog_api.api import dispositivos, atividades, usuarios, autorizacao
 
     app = Flask(__name__)
+
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
    
     # app.config.from_object(config)
     log.info('Configurado Flask')
@@ -57,35 +63,55 @@ def create_app():
     
     return app
 
+class MyListener(stomp.ConnectionListener):
+    def on_error(self, frame):
+        print('received an error "%s"' % frame.body)
+         
+    def on_message(self, frame):
+        start = datetime.now()
+        print(start)
+        print(sys.getsizeof(frame))
+        message = str(frame.body)
+        print('received a message "%s"' % frame.body)
+        mensagem_json = json.loads(message)
+        print(mensagem_json)
+        print(mensagem_json['ola'])
+        
+
+def init_stomp():
+    stomp_conn = stomp.Connection(host_and_ports=[(config.BROKER, config.STOMP_PORT)])
+    stomp_conn.set_listener('', MyListener())
+    stomp_conn.connect(config.USER, config.PASS, wait=True)
+
+    stomp_conn.subscribe(destination=config.STOMP_SUB_TOPIC, id=1, ack='auto')
+
+    return stomp_conn
+
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
-    client.subscribe(config.SUB_TOPIC, config.QOS)
-
-
-def on_message(client, userdata, msg):
-    if(msg.retain == 1):
-        pass
+    if rc == 0:
+        print("Conexão MQTT estabelecida com sucesso")
+        client.subscribe(config.PUB_TOPIC, config.QOS)
     else:
-        message = str(msg.payload)
-        print(message)
-        list = message.split("'")
-        if(not message.startswith("b'test")):
-            mensagem_json = json.loads(list[1])
-            print(mensagem_json)
+        print(f"Falha na conexão MQTT, código de retorno: {rc}")
 
+# Função de callback para mensagens recebidas
+def on_message(client, userdata, msg):
+    print(f"Mensagem recebida da fila: {msg.payload.decode()}")
 
-def create_mqtt_connection():
-    
-    Broker = "tccmansano.ddns.net"
-    client = mqtt.Client("fog_")
-    client.username_pw_set("juan", "juan1234")
-    client.connect(Broker, 1883)
-    client.loop_start()
+# Função para ouvir a fila MQTT
+def init_mqtt():
+    global mqtt_conn
+    mqtt_conn = mqtt.Client('fog_')
+    mqtt_conn.on_connect = on_connect
+    mqtt_conn.on_message = on_message
+    mqtt_conn.username_pw_set("juan", "juan1234")
+    mqtt_conn.connect(config.BROKER, config.MQTT_PORT, keepalive=60)
+    mqtt_conn.loop_start()
 
-    client.on_connect = on_connect
-    client.on_message = on_message
+    return mqtt_conn
 
-    return client
-
-mqtt = create_mqtt_connection()
+if config.PROTOCOL == 'stomp':
+    broker_conn = init_stomp()
+else:
+    broker_conn = init_mqtt()

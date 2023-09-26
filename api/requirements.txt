@@ -10,3 +10,4 @@ marshmallow_sqlalchemy
 bcrypt
 pyjwt
 paho-mqtt
+stomp.py

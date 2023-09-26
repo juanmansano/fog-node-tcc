@@ -1,3 +1,11 @@
 SUB_TOPIC='end_point'
 QOS=0
 PUB_TOPIC='fog'
+BROKER='tccmansano.ddns.net'
+MQTT_PORT=1883
+USER='juan'
+PASS='juan1234'
+STOMP_SUB_TOPIC="/queue/end_point"
+STOMP_PUB_TOPIC="/queue/fog"
+STOMP_PORT=61613
+PROTOCOL='mqtt'
