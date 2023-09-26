@@ -30,8 +30,7 @@ db_core = scoped_session(
             max_overflow=10,
             pool_recycle=60 * 60 * 1,
             pool_timeout=30,
-        ),
-        expire_on_commit=False
+        )
     )
 )
 

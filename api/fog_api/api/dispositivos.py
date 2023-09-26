@@ -19,9 +19,6 @@ def get(user_id):
             .filter(Autorizacao.id_usuario == user_id)\
                 .filter(Autorizacao.ativo==1).all()
     
-    db_core.remove()
-    db_core.close()
-    
     return jsonify(dispositivo_schema.dump(dispositivos))
 
 @app.route('/novoDispositivo', endpoint='newDevice', methods=['GET'])
@@ -35,9 +32,6 @@ def get():
         .filter(Dispositivos.nome == nome)\
                 .filter(Dispositivos.owner == owner)\
                     .filter(Dispositivos.data_criacao == data_criacao).all()
-    
-    db_core.remove()
-    db_core.close()
     
     return jsonify(dispositivo_schema.dump(dispositivos))
 
@@ -53,8 +47,6 @@ def post(dispositivo_id):
 
     db_core.add(dispositivo)
     db_core.commit()
-    db_core.remove()
-    db_core.close()
 
     return {'status_atualizado': True}
 
@@ -75,8 +67,6 @@ def post(dispositivo_id):
 
     db_core.add(dispositivo)
     db_core.commit()
-    db_core.remove()
-    db_core.close()
 
     return {'configuracao_atualizada': True}
 

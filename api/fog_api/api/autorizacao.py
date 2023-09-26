@@ -44,8 +44,6 @@ def post():
     
     db_core.add(autorizacao)
     db_core.commit()
-    db_core.remove()
-    db_core.close()
 
     return {'autorizacao_atualizada': 1}
     

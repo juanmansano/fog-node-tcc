@@ -26,8 +26,6 @@ def post():
     usuario = Usuarios(nome=nome, email=email, senha=senha)
     db_core.add(usuario)
     db_core.commit()
-    db_core.remove()
-    db_core.close()
 
     return {'usuario_adicionado': 1}
 
@@ -47,9 +45,6 @@ def get():
         return {'senha_incorreta': 1}, 400
 
     encode_jwt = jwt.encode(payload={"id": usuario.id, "nome": usuario.nome, "email": usuario.email, "exp": datetime.datetime.now() + datetime.timedelta(days=30) }, key='22b01d54f5921f51adb4d9c7a8fc2b1a', algorithm="HS256")
-    
-    db_core.remove()
-    db_core.close()
 
     return {'id': usuario.id, 'nome': usuario.nome, 'email': usuario.email, 'token': encode_jwt.decode()}
 
