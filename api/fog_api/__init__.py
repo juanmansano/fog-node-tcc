@@ -91,7 +91,7 @@ def init_stomp():
 def on_connect(client, userdata, flags, rc):
     if rc == 0:
         print("Conexão MQTT estabelecida com sucesso")
-        client.subscribe(config.PUB_TOPIC, config.QOS)
+        client.subscribe(config.SUB_TOPIC, config.QOS)
     else:
         print(f"Falha na conexão MQTT, código de retorno: {rc}")
 
