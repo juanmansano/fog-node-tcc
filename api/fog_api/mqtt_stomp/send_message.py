@@ -10,4 +10,7 @@ def send_message(dispostivo_id, atividade_id):
     message = json.dumps(message)
     print(message)
 
-    broker_conn.publish(config.PUB_TOPIC, message, config.QOS)
+    if config.PROTOCOL == 'stomp':
+        broker_conn.send(body=str(message), destination=config.STOMP_PUB_TOPIC)
+    else:
+        broker_conn.publish(config.PUB_TOPIC, message, config.QOS)
