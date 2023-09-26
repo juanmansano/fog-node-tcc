@@ -26,11 +26,8 @@ def get(dispositivo_id):
 @middleware
 def post():
     payload = request.json
-    print(payload)
 
     usuario = db_core.query(Usuarios).filter(Usuarios.email==payload['email']).first()
-
-    print(usuario.id)
 
     autorizacao = db_core.query(Autorizacao).\
                             filter(Autorizacao.id_usuario == usuario.id).\

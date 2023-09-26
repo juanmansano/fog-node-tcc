@@ -4,5 +4,7 @@ from fog_api.models.atividades import Atividades
 
 
 def send_message(dispostivo_id, atividade_id):
-    atividade = db_core.query(Atividades).filter(Atividades.id == atividade_id).all()
-    print(atividade['iluminancia'])
+    atividade = db_core.query(Atividades).filter(Atividades.id == atividade_id).first()
+    message = {"iluminancia": atividade.iluminancia}
+
+    broker_conn.publish(config.PUB_TOPIC, message, config.QOS)

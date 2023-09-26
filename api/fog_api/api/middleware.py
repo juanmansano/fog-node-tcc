@@ -10,7 +10,6 @@ def middleware(func):
     @wraps(func)
     def middleware_function(*args, **kargs):
         token = request.headers['authorization'].split(" ")[1]
-        print(request.headers)
             
         try:
             data = jwt.decode(token, '22b01d54f5921f51adb4d9c7a8fc2b1a', 'HS256')

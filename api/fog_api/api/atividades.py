@@ -11,9 +11,6 @@ app = Blueprint('atividades', __name__, url_prefix='/atividades')
 @middleware
 def get():
     atividades = db_core.query(Atividades).order_by(Atividades.iluminancia.asc()).all()
-
-    print(atividades)
-    print(jsonify(atividades_schema.dump(atividades)))
     
     db_core.remove()
     db_core.close()

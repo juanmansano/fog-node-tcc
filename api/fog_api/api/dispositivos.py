@@ -18,9 +18,6 @@ def get(user_id):
         .join(Autorizacao)\
             .filter(Autorizacao.id_usuario == user_id)\
                 .filter(Autorizacao.ativo==1).all()
-
-    print(dispositivos)
-    print(jsonify(dispositivo_schema.dump(dispositivos)))
     
     db_core.remove()
     db_core.close()
@@ -33,17 +30,11 @@ def get():
     nome = str(request.args.get('nome'))
     owner = request.args.get('owner')
     data_criacao_str = str(request.args.get('data_criacao'))
-    print(nome)
-    print(owner)
-    print(data_criacao_str)
     data_criacao = datetime.datetime.strptime(data_criacao_str, '%d/%m/%Y %H:%M:%S')
     dispositivos = db_core.query(Dispositivos)\
         .filter(Dispositivos.nome == nome)\
                 .filter(Dispositivos.owner == owner)\
                     .filter(Dispositivos.data_criacao == data_criacao).all()
-
-    print(dispositivos)
-    print(jsonify(dispositivo_schema.dump(dispositivos)))
     
     db_core.remove()
     db_core.close()
@@ -71,7 +62,6 @@ def post(dispositivo_id):
 @middleware
 def post(dispositivo_id):
     payload = request.json
-    print(payload)
     dispositivo = db_core.query(Dispositivos).filter(Dispositivos.id==dispositivo_id).first()
 
     dispositivo.id = dispositivo_id
