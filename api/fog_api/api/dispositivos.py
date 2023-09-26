@@ -71,6 +71,7 @@ def post(dispositivo_id):
 @middleware
 def post(dispositivo_id):
     payload = request.json
+    print(payload)
     dispositivo = db_core.query(Dispositivos).filter(Dispositivos.id==dispositivo_id).first()
 
     dispositivo.id = dispositivo_id
