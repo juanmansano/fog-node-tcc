@@ -68,7 +68,7 @@ def post(dispositivo_id):
     dispositivo.id_usuario_ultima_atualizacao = payload['usuario_ultima_atualizacao']
     if dispositivo.id_ultima_atividade != payload['id_ultima_atividade']:
         send_message(dispositivo_id, payload['id_ultima_atividade'])
-        dispositivo.id_ultima_atividade = payload['id_ultima_atividade']
+    dispositivo.id_ultima_atividade = payload['id_ultima_atividade']
     if(payload.get('nome')):
         dispositivo.nome = payload['nome']
 
