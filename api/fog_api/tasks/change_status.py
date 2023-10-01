@@ -9,14 +9,14 @@ match_answer = False
 dispostivo = 0
 atividade = 0
 
-def send_message(dispostivo_id, atividade_id):
+def send_message(dispositivo_id, atividade_id):
     global answer, match_answer, dispositivo, atividade
     answer = None
     match_answer = False
-    dispositivo = dispostivo_id
+    dispositivo = dispositivo_id
     atividade = atividade_id
     atividade_db = db_core.query(Atividades).filter(Atividades.id == atividade_id).first()
-    message = {"atividade": atividade_db.nome, "iluminancia": atividade_db.iluminancia, "atividade_id": atividade_id}
+    message = {"atualizar_dispositivo_id": dispositivo_id, "atividade_id": atividade_id, "iluminancia": atividade_db.iluminancia}
     message = json.dumps(message)
 
     if config.PROTOCOL == 'stomp':
@@ -28,7 +28,7 @@ def send_message(dispostivo_id, atividade_id):
         time.sleep(0.01)
 
     while not match_answer:
-        send_message(dispostivo_id, atividade_id)
+        send_message(dispositivo_id, atividade_id)
 
 
 def check_return(message):
