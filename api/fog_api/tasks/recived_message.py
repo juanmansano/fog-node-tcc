@@ -6,5 +6,5 @@ def message_recived(message):
     print(message)
     if message.get("ativar_owner"):
         adicionar_dispositivo(message)
-    elif message.get("atualizado"):
+    elif message.get("atualizado_dispositivo_id"):
         cs.answer = message

@@ -39,10 +39,10 @@ def check_return(message):
     global dispositivo, atividade, match_answer
     print(dispositivo)
     print(atividade)
-    print(message.get("dispositivo_id"))
+    print(message.get("atualizado_dispositivo_id"))
     print(message.get("atividade_id"))
 
-    if int(message.get("dispositivo_id")) == int(dispositivo)\
+    if int(message.get("atualizado_dispositivo_id")) == int(dispositivo)\
     and int(message.get("atividade_id")) == int(atividade):
         match_answer = True
     else:

@@ -94,7 +94,6 @@ def on_connect(client, userdata, flags, rc):
 def on_message(client, userdata, msg):
     from fog_api.tasks.recived_message import message_recived
     if not msg.retain:
-        print(msg)
         message_recived(json.loads(msg.payload.decode()))
 
 # Função para ouvir a fila MQTT
