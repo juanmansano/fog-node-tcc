@@ -7,8 +7,6 @@ from fog_api.models.autorizacao import Autorizacao
 
 
 def adicionar_dispositivo(mensagem):
-    print('function adicionar_dispositivo')
-    print(mensagem)
     id_usuario = mensagem.get('ativar_owner')
     nome = mensagem.get('nome')
     data_criacao = datetime.datetime.strptime(mensagem.get('data_criacao'), '%d/%m/%Y %H:%M:%S')
