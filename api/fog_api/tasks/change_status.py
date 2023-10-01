@@ -27,6 +27,8 @@ def send_message(dispositivo_id, atividade_id):
     while not answer:
         time.sleep(0.01)
 
+    match_answer = check_return(message)
+
     while not match_answer:
         send_message(dispositivo_id, atividade_id)
 
@@ -34,8 +36,7 @@ def send_message(dispositivo_id, atividade_id):
 def check_return(message):
 
     print(message)
-    global dispositivo, atividade, match_answer, answer
-    answer = message
+    global dispositivo, atividade, match_answer
 
     if int(message.get("dispositivo_id")) == int(dispositivo)\
     and message.get("atividade_id") == atividade:
