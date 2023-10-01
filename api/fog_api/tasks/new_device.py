@@ -13,7 +13,13 @@ def adicionar_dispositivo(mensagem):
     nome = mensagem.get('nome')
     data_criacao = datetime.datetime.strptime(mensagem.get('data_criacao'), '%d/%m/%Y %H:%M:%S')
 
-    dispositivo = Dispositivos(nome=nome, owner=id_usuario, data_criacao=data_criacao, id_usuario_ultima_atualizacao=id_usuario)
+    dispositivo = Dispositivos(nome=nome,
+                               id_ultima_atividade=1,
+                               owner=id_usuario, 
+                               data_criacao=data_criacao,
+                               ligado=0,
+                               ativo=1, 
+                               id_usuario_ultima_atualizacao=id_usuario)
     db_core.add(dispositivo)
     db_core.commit()
 
@@ -22,7 +28,7 @@ def adicionar_dispositivo(mensagem):
                                                      Dispositivos.owner==id_usuario).first()
     
 
-    autorizacao = Autorizacao(id_usuario=id_usuario, id_dispositivo=dispositivo['id'], ativo=1)
+    autorizacao = Autorizacao(id_usuario=id_usuario, id_dispositivo=dispositivo.id, ativo=1)
     db_core.add(autorizacao)
     db_core.commit()
 
