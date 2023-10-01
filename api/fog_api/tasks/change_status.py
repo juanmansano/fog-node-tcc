@@ -37,8 +37,8 @@ def check_return(message):
 
     answer = message
 
-    if int(message["dispositivo_id"]) == int(dispositivo)\
-    and message["atividade_id"] == atividade:
+    if int(message.get("dispositivo_id")) == int(dispositivo)\
+    and message.get("atividade_id") == atividade:
         match_answer = True
     else:
         match_answer = False

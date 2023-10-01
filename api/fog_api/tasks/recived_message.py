@@ -3,8 +3,6 @@
 from fog_api.tasks.new_device import adicionar_dispositivo
 from fog_api.tasks.change_status import check_return
 
-import json
-
 def message_recived(message):
 
     if message.get("ativar_owner"):
