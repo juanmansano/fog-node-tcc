@@ -5,12 +5,11 @@ import json
 import time
 
 answer = None
-match_answer = False
 dispositivo = 0
 atividade = 0
 
 def send_message(dispositivo_id, atividade_id):
-    global answer, match_answer, dispositivo, atividade
+    global answer, dispositivo, atividade
     answer = None
     match_answer = False
     dispositivo = dispositivo_id
@@ -44,6 +43,6 @@ def check_return(answer):
 
     if int(answer.get("atualizado_dispositivo_id")) == int(dispositivo)\
     and int(answer.get("atividade_id")) == int(atividade):
-        match_answer = True
+        return True
     else:
-        match_answer = False
+        return False
