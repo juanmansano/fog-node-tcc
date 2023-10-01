@@ -5,6 +5,7 @@ from fog_api.tasks.change_status import check_return
 
 
 def message_recived(message):
+    print("function message recived")
     print(message)
     if message["ativar_owner"]:
         adicionar_dispositivo(message)
