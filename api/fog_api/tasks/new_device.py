@@ -30,7 +30,7 @@ def adicionar_dispositivo(mensagem):
     db_core.add(autorizacao)
     db_core.commit()
 
-    message = "{'ativado': " + str(dispositivo.id) + "}"
+    message = '{"ativado": ' + str(dispositivo.id) + '}'
     message = json.dumps(message)
     
     if config.PROTOCOL == 'stomp':
