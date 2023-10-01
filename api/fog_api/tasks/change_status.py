@@ -27,23 +27,23 @@ def send_message(dispositivo_id, atividade_id):
     while not answer:
         time.sleep(0.01)
 
-    match_answer = check_return(message)
+    match_answer = check_return(answer)
 
     while not match_answer:
         send_message(dispositivo_id, atividade_id)
 
 
-def check_return(message):
+def check_return(answer):
 
-    print(message)
+    print(answer)
     global dispositivo, atividade, match_answer
     print(dispositivo)
     print(atividade)
-    print(message.get("atualizado_dispositivo_id"))
-    print(message.get("atividade_id"))
+    print(answer.get("atualizado_dispositivo_id"))
+    print(answer.get("atividade_id"))
 
-    if int(message.get("atualizado_dispositivo_id")) == int(dispositivo)\
-    and int(message.get("atividade_id")) == int(atividade):
+    if int(answer.get("atualizado_dispositivo_id")) == int(dispositivo)\
+    and int(answer.get("atividade_id")) == int(atividade):
         match_answer = True
     else:
         match_answer = False
