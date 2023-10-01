@@ -33,12 +33,12 @@ def send_message(dispositivo_id, atividade_id):
 
 def check_return(message):
 
-    global dispositivo, atividade, match_answer, answer
     print(message)
-    answer = message
+    # global dispositivo, atividade, match_answer, answer
+    # answer = message
 
-    if int(message.get("dispositivo_id")) == int(dispositivo)\
-    and message.get("atividade_id") == atividade:
-        match_answer = True
-    else:
-        match_answer = False
+    # if int(message.get("dispositivo_id")) == int(dispositivo)\
+    # and message.get("atividade_id") == atividade:
+    #     match_answer = True
+    # else:
+    #     match_answer = False
