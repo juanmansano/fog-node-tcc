@@ -5,7 +5,7 @@ import paho.mqtt.client as mqtt
 import paho.mqtt.publish as publish
 import mariadb
 import collections
-import datetime
+
 
 Broker = "tccmansano.ddns.net"
 
@@ -37,38 +37,7 @@ def on_message(client, userdata, msg):
             mensagem_json = json.loads(list[1])
             print(mensagem_json)
             if(mensagem_json.get('ativar')):
-                adicionar_dispositivo(mensagem_json)
-            
-def adicionar_dispositivo(mensagem):
-    id_usuario = mensagem.get('ativar')
-    nome = mensagem.get('nome')
-    data_criacao = datetime.datetime.strptime(mensagem.get('data_criacao'), '%d/%m/%Y %H:%M:%S')
-    
-    db = mariadb.connect(user = "juan",
-                         host="localhost",
-                         password="juan",
-                         database="tcc",
-                         autocommit=True)
-
-    cursor = db.cursor()
-    
-    cursor.execute("""insert into dispositivos(id_usuario_ultima_atualizacao, nome, owner, data_criacao) values ({}, '{}', {}, '{}')
-                    """.format(id_usuario, nome, id_usuario, data_criacao))
-    
-    cursor.execute("select max(id) from dispositivos")
-    
-    linha = cursor.fetchall();
-    id_dispositivo = linha[0][0]
-    
-    cursor.execute("insert into autorizacao(id_usuario, id_dispositivo, ativo) values({},{}, 1)".format(id_usuario, id_dispositivo))
-    
-    msg = "{'ativado': " + str(id_dispositivo) + "}"
-    
-    cursor.close()
-    db.close()
-    
-    client.publish(pub_topic, msg, QOS)
-    
+                adicionar_dispositivo(mensagem_json)    
     
        
 def on_publish(mosq, obj, mid):
