@@ -93,6 +93,7 @@ def on_connect(client, userdata, flags, rc):
 # Função de callback para mensagens recebidas
 def on_message(client, userdata, msg):
     import fog_api.tasks.recived_message as sm
+    print(msg.payload.decode())
     sm.answer = json.loads(msg.payload.decode())
 
 # Função para ouvir a fila MQTT
