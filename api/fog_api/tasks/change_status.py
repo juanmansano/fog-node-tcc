@@ -6,7 +6,7 @@ import time
 
 answer = None
 match_answer = False
-dispostivo = 0
+dispositivo = 0
 atividade = 0
 
 def send_message(dispositivo_id, atividade_id):
