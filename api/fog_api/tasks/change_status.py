@@ -34,12 +34,7 @@ def send_message(dispositivo_id, atividade_id):
 
 def check_return(answer):
 
-    print(answer)
     global dispositivo, atividade, match_answer
-    print(dispositivo)
-    print(atividade)
-    print(answer.get("atualizado_dispositivo_id"))
-    print(answer.get("atividade_id"))
 
     if int(answer.get("atualizado_dispositivo_id")) == int(dispositivo)\
     and int(answer.get("atividade_id")) == int(atividade):
