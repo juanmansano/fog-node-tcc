@@ -66,7 +66,7 @@ class MyListener(stomp.ConnectionListener):
         print('received an error "%s"' % frame.body)
          
     def on_message(self, frame):
-        import api.fog_api.tasks.recived_message as sm
+        import fog_api.tasks.recived_message as sm
 
         message = str(frame.body)
         mensagem_json = json.loads(message)
@@ -92,7 +92,7 @@ def on_connect(client, userdata, flags, rc):
 
 # Função de callback para mensagens recebidas
 def on_message(client, userdata, msg):
-    import api.fog_api.tasks.recived_message as sm
+    import fog_api.tasks.recived_message as sm
     sm.answer = json.loads(msg.payload.decode())
 
 # Função para ouvir a fila MQTT

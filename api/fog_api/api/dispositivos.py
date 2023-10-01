@@ -5,7 +5,7 @@ from fog_api.api.middleware import middleware
 
 from fog_api.models.dispositivos import Autorizacao, Dispositivos, dispositivo_schema
 
-from api.fog_api.tasks.change_status import send_message
+from fog_api.tasks.change_status import send_message
 
 import datetime
 
