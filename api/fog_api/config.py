@@ -1,5 +1,5 @@
 SUB_TOPIC='end_point'
-QOS=0
+QOS=1
 PUB_TOPIC='fog'
 BROKER='tccmansano.ddns.net'
 MQTT_PORT=1883
