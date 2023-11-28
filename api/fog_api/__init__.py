@@ -37,6 +37,7 @@ log = logging.getLogger(__name__)
 def create_app():
     """ Retorna o aplicativo pronto para execução """
     from fog_api.api import dispositivos, atividades, usuarios, autorizacao
+    from flask_socketio import SocketIO
 
     app = Flask(__name__)
 
@@ -58,8 +59,10 @@ def create_app():
     log.info('Configurado Blueprint')
 
     log.info("App criado")
+
+    socketio = SocketIO(app)
     
-    return app
+    return socketio
 
 class MyListener(stomp.ConnectionListener):
     def on_error(self, frame):

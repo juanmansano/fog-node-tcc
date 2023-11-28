@@ -11,3 +11,4 @@ bcrypt
 pyjwt
 paho-mqtt
 stomp.py
+flask-socketio
